@@ -1,6 +1,6 @@
 # Oli Clive-Griffin
 
-[Github](https://github.com/oclivegriffin), o.clivegriffin@gmail.com
+[Github](https://github.com/oclivegriffin), o [dot] clivegriffin [at] gmail [dot] com
 
 I'm currently on sabbatical, self-studying AI safety research engineering. I'm particularly interested in mechanistic interpretability.
 
