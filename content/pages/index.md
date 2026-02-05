@@ -8,7 +8,7 @@ I'm currently working at [Goodfire](https://goodfire.ai) on [Parameter Decomposi
 - [The geometry of LayerNorm and RMSNorm](./normgeometry.html) - A geometric perspective on LayerNorm and RMSNorm, exploring how they project vectors onto hyperspheres.
 
  ### Research / ML
-- [Stochastic Parameter Decomposition](https://github.com/goodfire-ai/spd) - Directly interpreting the weights of Neural Networks
+- **[Stochastic Parameter Decomposition](https://github.com/goodfire-ai/spd) - Directly interpreting the weights of Neural Networks**
 - <span style="opacity: 0.5; text-decoration: line-through;">[crosscode](https://github.com/oclivegriffin/crosscode) - A library for training Sparse Crosscoders, Transcoders, and SAEs.</span> I now think [parameter-space interpretability is more promising](https://www.lesswrong.com/posts/gYfpPbww3wQRaxAFD/activation-space-interpretability-may-be-doomed) than activation-space.
 - [Detecting Successful Adversarial Prompting From SAE Activations](https://www.apartresearch.com/project/classification-on-latent-feature-activation-for-detecting-adversarial-prompt-vulnerabilities) - Won 2nd place in [Apart Research](https://www.apartresearch.com/) and [Goodfire's](https://goodfire.ai/) "Reprogramming AI Models" research sprint.
 - [My Application to Neel Nanda's MATS stream](https://docs.google.com/document/d/1zxH7eVnaIqCe8lV0tVrQvMqHesUPTQStsSooiArkPXg) - Investigating use of for-loop variables in toy language models. (i.e. `for (int i = 0; ` should predict `i` as the next token)
