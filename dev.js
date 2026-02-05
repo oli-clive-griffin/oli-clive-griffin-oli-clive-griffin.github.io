@@ -1,33 +1,48 @@
 import chokidar from 'chokidar';
-import { convertMarkdownIndex } from './convert_md.js';
+import { convertMarkdownToHtml } from './convert_md.js';
 import express from 'express';
 import fs from 'fs';
 
+const PUBLISH_INDEX = JSON.parse(
+    fs.readFileSync('./content/publish_index.json', 'utf-8')
+);
+if (!Array.isArray(PUBLISH_INDEX)) throw new Error('publish_index.json is not a valid array');
 
-// Create express app
-const app = express();
-const PORT = 3000;
+function generate(path) {
+    const entry = PUBLISH_INDEX.find(entry => entry.sourcePath === path);
+    if (!entry) throw new Error(`Entry not found for ${path}`);
+    convertMarkdownToHtml(
+        entry.sourcePath,
+        `./docs/${entry.urlPath}`,
+        entry.title,
+        entry.type
+    );
+}
 
-// Serve static files from htdocs
-app.use(express.static('htdocs'));
+function main() {
+    for (const entry of PUBLISH_INDEX) {
+        generate(entry.sourcePath);
+    }
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+    // Watch for changes in markdown files and config files
+    chokidar
+        .watch(PUBLISH_INDEX.map(entry => entry.sourcePath))
+        .on('change', (path) => {
+            console.log(`File ${path} has been changed, regenerating...`);
+            generate(path);
+        });
 
-// Watch for changes in markdown files and config files
-const sourceFiles = JSON.parse(fs.readFileSync('./content/publish_index.json')).map(entry => entry.source);
+    // Create express app
+    const app = express();
+    const PORT = 3000;
 
-const watcher = chokidar.watch(sourceFiles)
+    // Serve static files from docs
+    app.use(express.static('docs'));
 
-convertMarkdownIndex()
-    .then(() => console.log(`Converted all files`))
-    .catch((e) => console.error(`Error converting`, e));
+    // Start the server
+    app.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+    });
+}
 
-watcher.on('change', (path) => {
-    console.log(`File ${path} has been changed`);
-    convertMarkdownIndex()
-        .then(() => console.log(`Converted all files`))
-        .catch((e) => console.error(`Error converting`, e));
-}); 
+main();
